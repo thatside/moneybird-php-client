@@ -29,4 +29,13 @@ class Webhook extends Model {
      * @var string
      */
     protected $endpoint = 'webhooks';
+
+    public function insert()
+    {
+        $array = $this->getArrayWithNestedObjects();
+        $data = json_encode($array);
+        $result = $this->connection()->post($this->getEndpoint(), $data);
+
+        return $this->selfFromResponse($result);
+    }
 }
