@@ -32,8 +32,7 @@ class Webhook extends Model {
 
     public function insert()
     {
-        $array = $this->getArrayWithNestedObjects();
-        $data = json_encode($array);
+        $data = json_encode(json_decode($this->json(), true), JSON_UNESCAPED_SLASHES);
         $result = $this->connection()->post($this->getEndpoint(), $data);
 
         return $this->selfFromResponse($result);
